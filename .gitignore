@@ -1,0 +1,23 @@
+# Foundry
+out/
+cache/
+broadcast/
+forge-artifacts/
+
+# Dependencies
+lib/
+
+# Coverage and gas reports
+lcov.info
+gas-report.txt
+
+# Editors
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+
+# Local env
+.env
