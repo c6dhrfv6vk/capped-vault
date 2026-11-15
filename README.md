@@ -54,6 +54,13 @@ Deposits revert with `CapExceeded(total, cap)` past the limit:
 vault.deposit(1_000e6, msg.sender); // reverts if it would push totalAssets() over cap
 ```
 
+Deposit without watching the cap through `CapAwareRouter`, which fills the
+remaining room and refunds the excess in the same call:
+
+```solidity
+router.depositUpToCap(1_000e6, msg.sender); // deposits up to cap, refunds the rest
+```
+
 Harvest after yield shows up in `totalAssets()`:
 
 ```sh
@@ -70,9 +77,11 @@ forge test --match-test testFuzz -vvv
 ## Layout
 
 ```
-src/CappedVault.sol      vault, cap and fee accounting
-src/mocks/TestToken.sol  mintable ERC-20 for tests only
-test/CappedVault.t.sol   cap, fee, loss and redeem fuzz tests
+src/CappedVault.sol       vault, cap and fee accounting
+src/periphery/CapAwareRouter.sol  partial deposits with automatic refund
+src/mocks/TestToken.sol   mintable ERC-20 for tests only
+test/CappedVault.t.sol    cap, fee, loss and redeem fuzz tests
+test/CapAwareRouter.t.sol router clamping and refund tests
 ```
 
 ## Upgrade path
